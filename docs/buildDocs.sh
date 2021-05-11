@@ -37,6 +37,10 @@ rsync -av "docs/_build/html/" "${docroot}/"
 
 pushd "${docroot}"
 
+cat << EOF > CNAME
+www.vbutselaar.nl
+EOF
+
 # don't bother maintaining history; just generate fresh
 git init
 git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
