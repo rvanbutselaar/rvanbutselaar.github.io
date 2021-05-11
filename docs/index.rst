@@ -7,10 +7,10 @@ Welcome to Ronald's documentation!
 =========================================
 
 .. toctree::
-   :maxdepth: 5
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: OpenShift troubleshooting:
 
-   openshift/troubleshooting/mcp_degraded.rst
+   openshift/index
 
 
 Indices and tables
