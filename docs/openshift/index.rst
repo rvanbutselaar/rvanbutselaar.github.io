@@ -6,3 +6,4 @@ OpenShift
    :maxdepth: 2
 
    troubleshooting/index
+   how-to/index
