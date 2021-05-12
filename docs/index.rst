@@ -8,7 +8,7 @@ Welcome to Ronald's documentation!
 
 .. toctree::
    :maxdepth: 3
-   :caption: OpenShift troubleshooting:
+   :caption: OpenShift:
 
    openshift/index
 
