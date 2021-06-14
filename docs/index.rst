@@ -11,6 +11,7 @@ Welcome to Ronald's documentation!
    :caption: OpenShift:
 
    openshift/index
+   macos/index
 
 
 Indices and tables
