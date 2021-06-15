@@ -6,3 +6,4 @@ OpenShift how-to
    :maxdepth: 2
 
    list_in_use_pvc
+   oc_commands
