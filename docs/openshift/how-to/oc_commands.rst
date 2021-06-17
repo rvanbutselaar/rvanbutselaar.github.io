@@ -1,4 +1,4 @@
-OC commands
+oc commands
 ========================================================================
 
 Loop namespaces, based on a label
