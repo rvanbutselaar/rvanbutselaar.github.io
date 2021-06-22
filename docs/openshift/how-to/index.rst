@@ -8,3 +8,4 @@ OpenShift how-to
    list_in_use_pvc
    oc_commands
    update_ca_bundle
+   sshd_hardening
