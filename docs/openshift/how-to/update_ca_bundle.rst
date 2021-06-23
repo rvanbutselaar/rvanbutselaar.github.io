@@ -11,6 +11,6 @@ And, if you need to you can update the container runtime (cri-o) ca bundle using
 
 .. code-block:: bash
 
-  oc create configmap harbor-registry-root-ca --from-file=harbor.rijkszaak.nl=ca-bundle.crt --dry-run -o yaml| oc -n openshift-config replace -f-
+  oc create configmap registry-root-ca --from-file=registry.nl=ca-bundle.crt --dry-run -o yaml| oc -n openshift-config replace -f-
 
 In both cases you need to create a file containing all the CA's you want to include. You can add multiple in a single file.
