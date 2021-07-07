@@ -12,6 +12,7 @@ Welcome to Ronald's documentation!
 
    openshift/index
    macos/index
+   golang/index
 
 
 Indices and tables
