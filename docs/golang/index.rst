@@ -6,3 +6,4 @@ Golang
    :maxdepth: 2
 
    info
+   cobra
