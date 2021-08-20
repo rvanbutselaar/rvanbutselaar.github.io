@@ -9,3 +9,4 @@ OpenShift how-to
    oc_commands
    update_ca_bundle
    sshd_hardening
+   cluster_node_tuning
