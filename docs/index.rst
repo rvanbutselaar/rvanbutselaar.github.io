@@ -13,6 +13,7 @@ Welcome to Ronald's documentation!
    openshift/index
    macos/index
    golang/index
+   aws/index
 
 
 Indices and tables
