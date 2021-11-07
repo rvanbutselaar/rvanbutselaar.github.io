@@ -10,3 +10,4 @@ OpenShift how-to
    update_ca_bundle
    sshd_hardening
    cluster_node_tuning
+   working_with_openshift
