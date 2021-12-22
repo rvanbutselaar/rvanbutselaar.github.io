@@ -8,3 +8,4 @@ Golang
    info
    cobra
    value_reference_type
+   environment_variables
