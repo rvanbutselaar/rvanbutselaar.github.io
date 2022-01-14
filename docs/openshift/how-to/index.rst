@@ -12,3 +12,4 @@ OpenShift how-to
    sshd_hardening
    cluster_node_tuning
    working_with_openshift
+   list_unused_pvc
