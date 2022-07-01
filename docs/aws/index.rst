@@ -6,3 +6,4 @@ AWS
    :maxdepth: 2
 
    cli
+   eks
