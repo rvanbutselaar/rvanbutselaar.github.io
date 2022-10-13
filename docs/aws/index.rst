@@ -7,3 +7,4 @@ AWS
 
    cli
    eks
+   ec2-instance-type
