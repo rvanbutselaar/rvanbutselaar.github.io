@@ -1,0 +1,33 @@
+.NET
+========================================================================
+
+Enable WCF tracing
+
+.. code-block:: bash
+
+  <!-- WCF tracing -->
+  <system.diagnostics>
+    <trace autoflush="true" />
+    <sources>
+      <source name="System.ServiceModel.MessageLogging" switchValue="All, Warning, ActivityTracing">
+        <listeners>
+          <add name="ServiceModelTraceListener" />
+        </listeners>
+      </source>
+
+      <source name="System.ServiceModel" switchValue="All, Information, ActivityTracing" propagateActivity="true">
+        <listeners>
+          <add name="ServiceModelTraceListener" />
+        </listeners>
+      </source>
+      <source name="System.Runtime.Serialization" switchValue="All, Verbose,ActivityTracing">
+        <listeners>
+          <add name="ServiceModelTraceListener" />
+        </listeners>
+      </source>
+    </sources>
+    <sharedListeners>
+      <add initializeData="c:\Pricing_ServicesClient.svclog" type="System.Diagnostics.XmlWriterTraceListener, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="ServiceModelTraceListener" traceOutputOptions="Timestamp" />
+    </sharedListeners>
+  </system.diagnostics>
+  <!-- WCF tracing -->
