@@ -15,6 +15,7 @@ Welcome to Ronald's documentation!
    golang/index
    aws/index
    windows/index
+   terraform/index
 
 
 Indices and tables
