@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OCP 4 sshd hardening &mdash; Ronald 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="OCP 4 tune nodes inside cluster" href="cluster_node_tuning.html" />
+    <link rel="prev" title="OCP 4 update CA bundle" href="update_ca_bundle.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Ronald
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">OpenShift:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">OpenShift</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">OpenShift troubleshooting</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">OpenShift how-to</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="alertmanager_silence.html">Alertmanager silence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_in_use_pvc.html">OCP 4 list in use persistentVolumeClaim per pod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="oc_commands.html">oc commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update_ca_bundle.html">OCP 4 update CA bundle</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">OCP 4 sshd hardening</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cluster_node_tuning.html">OCP 4 tune nodes inside cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="working_with_openshift.html">Working with OpenShift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_unused_pvc.html">List unused PVC’s inside project using Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../macos/index.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../golang/index.html">Golang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../aws/index.html">AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../azure/index.html">Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows/index.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../terraform/index.html">Terraform</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Ronald</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">OpenShift</a></li>
+          <li class="breadcrumb-item"><a href="index.html">OpenShift how-to</a></li>
+      <li class="breadcrumb-item active">OCP 4 sshd hardening</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/openshift/how-to/sshd_hardening.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ocp-4-sshd-hardening">
+<h1>OCP 4 sshd hardening<a class="headerlink" href="#ocp-4-sshd-hardening" title="Permalink to this heading"></a></h1>
+<p>To only accept the following ssh ciphers you will need to configure this.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Ciphers<span class="w"> </span>chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-c%
+</pre></div>
+</div>
+<p>You need 2 MachineConfig’s. One for the master:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">machineconfiguration.openshift.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MachineConfig</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">machineconfiguration.openshift.io/role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;master&quot;</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;master-ssh-hardening&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ignition</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">      </span><span class="nt">security</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">tls</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">      </span><span class="nt">timeouts</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.2.0</span>
+<span class="w">    </span><span class="nt">networkd</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">passwd</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">storage</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">files</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">contents</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data:text/plain;charset=utf-8;base64,Q2lwaGVycyBjaGFjaGEyMC1wb2x5MTMwNUBvcGVuc3NoLmNvbSxhZXMyNTYtZ2NtQG9wZW5zc2guY29tLGFlczEyOC1nY21Ab3BlbnNzaC5jb20sYWVzMjU2LWN0cixhZXMxOTItY3RyLGFlczEyOC1jdHI=</span>
+<span class="w">        </span><span class="nt">filesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">420</span>
+<span class="w">        </span><span class="nt">overwrite</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/ssh/sshd_config.d/99-ssh-hardening.conf</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">contents</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data:text/plain;charset=utf-8;base64,IyBDb25maWd1cmF0aW9uIGZpbGUgZm9yIHRoZSBzc2hkIHNlcnZpY2UuCgojIFRoZSBzZXJ2ZXIga2V5cyBhcmUgYXV0b21hdGljYWxseSBnZW5lcmF0ZWQgaWYgdGhleSBhcmUgbWlzc2luZy4KIyBUbyBjaGFuZ2UgdGhlIGF1dG9tYXRpYyBjcmVhdGlvbiwgYWRqdXN0IHNzaGQuc2VydmljZSBvcHRpb25zIGZvcgojIGV4YW1wbGUgdXNpbmcgIHN5c3RlbWN0bCBlbmFibGUgc3NoZC1rZXlnZW5AZHNhLnNlcnZpY2UgIHRvIGFsbG93IGNyZWF0aW9uCiMgb2YgRFNBIGtleSBvciAgc3lzdGVtY3RsIG1hc2sgc3NoZC1rZXlnZW5AcnNhLnNlcnZpY2UgIHRvIGRpc2FibGUgUlNBIGtleQojIGNyZWF0aW9uLgoKIyBEbyBub3QgY2hhbmdlIHRoaXMgb3B0aW9uIHVubGVzcyB5b3UgaGF2ZSBoYXJkd2FyZSByYW5kb20KIyBnZW5lcmF0b3IgYW5kIHlvdSBSRUFMTFkga25vdyB3aGF0IHlvdSBhcmUgZG9pbmcKClNTSF9VU0VfU1RST05HX1JORz0wCiMgU1NIX1VTRV9TVFJPTkdfUk5HPTEKCiMgU3lzdGVtLXdpZGUgY3J5cHRvIHBvbGljeToKIyBUbyBvcHQtb3V0LCB1bmNvbW1lbnQgdGhlIGZvbGxvd2luZyBsaW5lCkNSWVBUT19QT0xJQ1k9</span>
+<span class="w">        </span><span class="nt">filesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">420</span>
+<span class="w">        </span><span class="nt">overwrite</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/sysconfig/sshd</span>
+<span class="w">  </span><span class="nt">osImageURL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+</pre></div>
+</div>
+<p>And one for the worker node(s)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">machineconfiguration.openshift.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MachineConfig</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">machineconfiguration.openshift.io/role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;worker&quot;</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;worker-ssh-hardening&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ignition</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">      </span><span class="nt">security</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">tls</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">      </span><span class="nt">timeouts</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.2.0</span>
+<span class="w">    </span><span class="nt">networkd</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">passwd</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">storage</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">files</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">contents</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data:text/plain;charset=utf-8;base64,Q2lwaGVycyBjaGFjaGEyMC1wb2x5MTMwNUBvcGVuc3NoLmNvbSxhZXMyNTYtZ2NtQG9wZW5zc2guY29tLGFlczEyOC1nY21Ab3BlbnNzaC5jb20sYWVzMjU2LWN0cixhZXMxOTItY3RyLGFlczEyOC1jdHI=</span>
+<span class="w">        </span><span class="nt">filesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">420</span>
+<span class="w">        </span><span class="nt">overwrite</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/ssh/sshd_config.d/99-ssh-hardening.conf</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">contents</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data:text/plain;charset=utf-8;base64,IyBDb25maWd1cmF0aW9uIGZpbGUgZm9yIHRoZSBzc2hkIHNlcnZpY2UuCgojIFRoZSBzZXJ2ZXIga2V5cyBhcmUgYXV0b21hdGljYWxseSBnZW5lcmF0ZWQgaWYgdGhleSBhcmUgbWlzc2luZy4KIyBUbyBjaGFuZ2UgdGhlIGF1dG9tYXRpYyBjcmVhdGlvbiwgYWRqdXN0IHNzaGQuc2VydmljZSBvcHRpb25zIGZvcgojIGV4YW1wbGUgdXNpbmcgIHN5c3RlbWN0bCBlbmFibGUgc3NoZC1rZXlnZW5AZHNhLnNlcnZpY2UgIHRvIGFsbG93IGNyZWF0aW9uCiMgb2YgRFNBIGtleSBvciAgc3lzdGVtY3RsIG1hc2sgc3NoZC1rZXlnZW5AcnNhLnNlcnZpY2UgIHRvIGRpc2FibGUgUlNBIGtleQojIGNyZWF0aW9uLgoKIyBEbyBub3QgY2hhbmdlIHRoaXMgb3B0aW9uIHVubGVzcyB5b3UgaGF2ZSBoYXJkd2FyZSByYW5kb20KIyBnZW5lcmF0b3IgYW5kIHlvdSBSRUFMTFkga25vdyB3aGF0IHlvdSBhcmUgZG9pbmcKClNTSF9VU0VfU1RST05HX1JORz0wCiMgU1NIX1VTRV9TVFJPTkdfUk5HPTEKCiMgU3lzdGVtLXdpZGUgY3J5cHRvIHBvbGljeToKIyBUbyBvcHQtb3V0LCB1bmNvbW1lbnQgdGhlIGZvbGxvd2luZyBsaW5lCkNSWVBUT19QT0xJQ1k9</span>
+<span class="w">        </span><span class="nt">filesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">420</span>
+<span class="w">        </span><span class="nt">overwrite</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/sysconfig/sshd</span>
+<span class="w">  </span><span class="nt">osImageURL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="update_ca_bundle.html" class="btn btn-neutral float-left" title="OCP 4 update CA bundle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cluster_node_tuning.html" class="btn btn-neutral float-right" title="OCP 4 tune nodes inside cluster" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ronald van Butselaar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

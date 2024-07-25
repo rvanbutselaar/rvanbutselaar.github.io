@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AWS list available instance type in AZ &mdash; Ronald 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Azure" href="../azure/index.html" />
+    <link rel="prev" title="AWS EKS (Fargate)" href="eks.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Ronald
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">OpenShift:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../openshift/index.html">OpenShift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../macos/index.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../golang/index.html">Golang</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">AWS</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cli.html">AWS CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eks.html">AWS EKS (Fargate)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">AWS list available instance type in AZ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/index.html">Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../windows/index.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../terraform/index.html">Terraform</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Ronald</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">AWS</a></li>
+      <li class="breadcrumb-item active">AWS list available instance type in AZ</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/aws/ec2-instance-type.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="aws-list-available-instance-type-in-az">
+<h1>AWS list available instance type in AZ<a class="headerlink" href="#aws-list-available-instance-type-in-az" title="Permalink to this heading"></a></h1>
+<p>Delete files inside S3 buckets</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># logger config</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+
+                    <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1">: </span><span class="si">%(levelname)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">ec2_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
+<span class="n">sns_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;sns&#39;</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checking if c6a.xlarge is available in eu-central-1a&quot;</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">ec2_client</span><span class="o">.</span><span class="n">describe_instance_type_offerings</span><span class="p">(</span>
+    <span class="n">LocationType</span><span class="o">=</span><span class="s1">&#39;availability-zone&#39;</span><span class="p">,</span>
+    <span class="n">Filters</span><span class="o">=</span><span class="p">[{</span>
+        <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;location&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Values&#39;</span><span class="p">:[</span><span class="s1">&#39;eu-central-1a&#39;</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;instance-type&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Values&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;c6a.xlarge&#39;</span><span class="p">],</span>
+        <span class="p">}])</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;InstanceTypeOfferings&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">sns_client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">TopicArn</span><span class="o">=</span><span class="s2">&quot;arn:aws:sns:eu-central-1:ACCOUNT_ID:email-test&quot;</span><span class="p">,</span>
+                <span class="n">Message</span><span class="o">=</span><span class="s2">&quot;c6a.xlarge is available in eu-central-1a&quot;</span><span class="p">,</span>
+                <span class="n">Subject</span><span class="o">=</span><span class="s2">&quot;c6a.xlarge is available in eu-central-1a&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">offering</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;InstanceTypeOfferings&#39;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">offering</span><span class="p">[</span><span class="s1">&#39;InstanceType&#39;</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">sns_client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">TopicArn</span><span class="o">=</span><span class="s2">&quot;arn:aws:sns:eu-central-1: ACCOUNT:email-test&quot;</span><span class="p">,</span>
+                <span class="n">Message</span><span class="o">=</span><span class="s2">&quot;c6a.xlarge is NOT available in eu-central-1a&quot;</span><span class="p">,</span>
+                <span class="n">Subject</span><span class="o">=</span><span class="s2">&quot;c6a.xlarge is NOT available in eu-central-1a&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="eks.html" class="btn btn-neutral float-left" title="AWS EKS (Fargate)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../azure/index.html" class="btn btn-neutral float-right" title="Azure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ronald van Butselaar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

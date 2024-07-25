@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Working with OpenShift &mdash; Ronald 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="List unused PVC’s inside project using Python" href="list_unused_pvc.html" />
+    <link rel="prev" title="OCP 4 tune nodes inside cluster" href="cluster_node_tuning.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Ronald
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">OpenShift:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">OpenShift</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/index.html">OpenShift troubleshooting</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">OpenShift how-to</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="alertmanager_silence.html">Alertmanager silence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_in_use_pvc.html">OCP 4 list in use persistentVolumeClaim per pod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="oc_commands.html">oc commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="update_ca_bundle.html">OCP 4 update CA bundle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sshd_hardening.html">OCP 4 sshd hardening</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cluster_node_tuning.html">OCP 4 tune nodes inside cluster</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Working with OpenShift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_unused_pvc.html">List unused PVC’s inside project using Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../macos/index.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../golang/index.html">Golang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../aws/index.html">AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../azure/index.html">Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows/index.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../terraform/index.html">Terraform</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Ronald</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">OpenShift</a></li>
+          <li class="breadcrumb-item"><a href="index.html">OpenShift how-to</a></li>
+      <li class="breadcrumb-item active">Working with OpenShift</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/openshift/how-to/working_with_openshift.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="working-with-openshift">
+<h1>Working with OpenShift<a class="headerlink" href="#working-with-openshift" title="Permalink to this heading"></a></h1>
+<p><strong>Create a new deployment with name ‘ronald’ based on a public git repo</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>new-app<span class="w"> </span>--name<span class="w"> </span>ronald<span class="w"> </span>https://github.com/sclorg/cakephp-ex
+</pre></div>
+</div>
+<p><strong>Creating secrets</strong></p>
+<p>Source: <a class="reference external" href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/nodes/working-with-pods#nodes-pods-secrets">https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/nodes/working-with-pods#nodes-pods-secrets</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>ronald-secret<span class="w"> </span>--from-literal<span class="o">=</span><span class="nv">username</span><span class="o">=</span>ronald<span class="w"> </span>--from-literal<span class="o">=</span><span class="nv">password</span><span class="o">=</span>topsecretpass
+</pre></div>
+</div>
+<p><strong>Viewing secrets</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>ronald-secret<span class="w"> </span>-ojsonpath<span class="o">=</span><span class="s1">&#39;{.data.password}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+oc<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>ronald-secret<span class="w"> </span>-ojsonpath<span class="o">=</span><span class="s1">&#39;{.data.username}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+</pre></div>
+</div>
+<p><strong>Using secrets as an environment variable</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>containers:
+-<span class="w"> </span>env:
+<span class="w">  </span>-<span class="w"> </span>name:<span class="w"> </span>PASSWORD
+<span class="w">    </span>valueFrom:
+<span class="w">      </span>secretKeyRef:
+<span class="w">        </span>key:<span class="w"> </span>password
+<span class="w">        </span>name:<span class="w"> </span>ronald-secret
+<span class="w">  </span>-<span class="w"> </span>name:<span class="w"> </span>USERNAME
+<span class="w">    </span>valueFrom:
+<span class="w">      </span>secretKeyRef:
+<span class="w">        </span>key:<span class="w"> </span>username
+<span class="w">        </span>name:<span class="w"> </span>ronald-secret
+</pre></div>
+</div>
+<p><strong>Using secrets as a volume mount</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>containers:
+<span class="w">  </span>volumeMounts:
+<span class="w">  </span>-<span class="w"> </span>mountPath:<span class="w"> </span>/etc/secret-volume
+<span class="w">    </span>name:<span class="w"> </span>secret-volume
+<span class="w">    </span>readOnly:<span class="w"> </span><span class="nb">true</span>
+volumes:
+-<span class="w"> </span>emptyDir:<span class="w"> </span><span class="o">{}</span>
+<span class="w">  </span>name:<span class="w"> </span>secret-volume
+</pre></div>
+</div>
+<p><strong>Expose a service as a route</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>expose<span class="w"> </span>service/ronald
+</pre></div>
+</div>
+<p><strong>Creating a secured route (TLS)</strong></p>
+<p>Source: <a class="reference external" href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/networking/configuring-routes">https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/networking/configuring-routes</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-nodes<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-keyout<span class="w"> </span>tls.key<span class="w"> </span>-out<span class="w"> </span>tls.crt
+
+openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span>tls.crt<span class="w"> </span>-text<span class="w"> </span>-noout
+
+oc<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>edge<span class="w"> </span>--service<span class="o">=</span>ronald<span class="w"> </span>--cert<span class="o">=</span>tls.crt<span class="w"> </span>--key<span class="o">=</span>tls.key
+
+spec:
+<span class="w">  </span>tls:
+<span class="w">    </span>termination:<span class="w"> </span>edge
+<span class="w">    </span>certificate:<span class="w"> </span><span class="p">|</span>
+<span class="w">      </span>-----BEGIN<span class="w"> </span>CERTIFICATE-----
+<span class="w">      </span>-----END<span class="w"> </span>CERTIFICATE-----
+<span class="w">    </span>key:<span class="w"> </span><span class="p">|</span>
+<span class="w">      </span>-----BEGIN<span class="w"> </span>PRIVATE<span class="w"> </span>KEY-----
+<span class="w">      </span>-----END<span class="w"> </span>PRIVATE<span class="w"> </span>KEY-----
+</pre></div>
+</div>
+<p><strong>htpasswd</strong></p>
+<p>Source: <a class="reference external" href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/authentication_and_authorization/configuring-identity-providers#configuring-htpasswd-identity-provider">https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/authentication_and_authorization/configuring-identity-providers#configuring-htpasswd-identity-provider</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>httpd-tools
+
+<span class="c1"># create file</span>
+htpasswd<span class="w"> </span>-c<span class="w"> </span>-B<span class="w"> </span>-b<span class="w"> </span>users.htpasswd<span class="w"> </span>admin<span class="w"> </span>admin
+
+<span class="c1"># update file, add additional user</span>
+htpasswd<span class="w"> </span>-B<span class="w"> </span>-b<span class="w"> </span>users.htpasswd<span class="w"> </span>ronald<span class="w"> </span>ronald
+
+oc<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>htpass-secret-new<span class="w"> </span>--from-file<span class="o">=</span><span class="nv">htpasswd</span><span class="o">=</span>users.htpasswd<span class="w"> </span>-n<span class="w"> </span>openshift-config
+
+oc<span class="w"> </span>edit<span class="w"> </span>oauth<span class="w"> </span>cluster
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config.openshift.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OAuth</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">identityProviders</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_htpasswd_provider</span>
+<span class="w">    </span><span class="nt">mappingMethod</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claim</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTPasswd</span>
+<span class="w">    </span><span class="nt">htpasswd</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">fileData</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpass-secret-new</span>
+</pre></div>
+</div>
+<p><strong>Modify / delete user (passwords)</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>htpass-secret-new<span class="w"> </span>-ojsonpath<span class="o">={</span>.data.htpasswd<span class="o">}</span><span class="w"> </span>-n<span class="w"> </span>openshift-config<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--decode<span class="w"> </span>&gt;<span class="w"> </span>users.htpasswd
+
+<span class="c1"># add new user</span>
+htpasswd<span class="w"> </span>-b<span class="w"> </span>-B<span class="w"> </span>users.htpasswd<span class="w"> </span>&lt;username&gt;<span class="w"> </span>&lt;password&gt;
+
+<span class="c1"># update password</span>
+htpasswd<span class="w"> </span>-B<span class="w"> </span>-b<span class="w"> </span>users.htpasswd<span class="w"> </span>&lt;username&gt;<span class="w"> </span>&lt;password&gt;
+
+<span class="c1"># delete user</span>
+htpasswd<span class="w"> </span>-D<span class="w"> </span>users.htpasswd<span class="w"> </span>&lt;username&gt;
+
+<span class="c1"># replace the secret</span>
+oc<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>htpass-secret-new<span class="w"> </span>--from-file<span class="o">=</span><span class="nv">htpasswd</span><span class="o">=</span>users.htpasswd<span class="w"> </span>--dry-run<span class="o">=</span>client<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>-n<span class="w"> </span>openshift-config<span class="w"> </span><span class="p">|</span><span class="w"> </span>oc<span class="w"> </span>replace<span class="w"> </span>-f<span class="w"> </span>-
+
+<span class="c1"># delete user inside openshift</span>
+oc<span class="w"> </span>delete<span class="w"> </span>user<span class="w"> </span>kubeadmin
+oc<span class="w"> </span>delete<span class="w"> </span>identity<span class="w"> </span>my_htpasswd_provider:kubeadmin
+</pre></div>
+</div>
+<p><strong>RBAC (create cluster-admin)</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </span>add-cluster-role-to-user<span class="w"> </span>cluster-admin<span class="w"> </span>admin
+</pre></div>
+</div>
+<p><strong>RBAC (project access)</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </span>add-role-to-user<span class="w"> </span>admin<span class="w"> </span>ronald<span class="w"> </span>-n<span class="w"> </span>rvb-tst01
+</pre></div>
+</div>
+<p><strong>Create custom RBAC rules</strong></p>
+<p>Allow a user to get and list pods inside a project</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>create<span class="w"> </span>role<span class="w"> </span>getpods<span class="w"> </span>--verb<span class="o">=</span>get,list<span class="w"> </span>--resource<span class="o">=</span>pods<span class="w"> </span>-n<span class="w"> </span>rvb-tst02
+
+oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </span>add-role-to-user<span class="w"> </span>getpods<span class="w"> </span>ronald<span class="w"> </span>--role-namespace<span class="w"> </span>rvb-tst02<span class="w"> </span>-n<span class="w"> </span>rvb-tst02
+</pre></div>
+</div>
+<p><strong>Quota</strong></p>
+<p>Source: <a class="reference external" href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/applications/quotas">https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/applications/quotas</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>create<span class="w"> </span>quota<span class="w"> </span>ronald-quota<span class="w"> </span>--hard<span class="o">=</span><span class="nv">cpu</span><span class="o">=</span><span class="m">1</span>,memory<span class="o">=</span>1G,pods<span class="o">=</span><span class="m">10</span>,services<span class="o">=</span><span class="m">3</span>,secrets<span class="o">=</span><span class="m">5</span>
+</pre></div>
+</div>
+<p>View the status, used vs available resources inside the resourcequota:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>get<span class="w"> </span>resourcequota
+</pre></div>
+</div>
+<p><strong>Limit range</strong></p>
+<p>Set default cpu &amp; memory request / limits on projects</p>
+<p>Source: <a class="reference external" href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/nodes/working-with-clusters#nodes-cluster-limit-ranges">https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/nodes/working-with-clusters#nodes-cluster-limit-ranges</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>describe<span class="w"> </span>limits<span class="w"> </span>resource-limits
+</pre></div>
+</div>
+<p><strong>Scaling</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>scale<span class="w"> </span>deploy<span class="w"> </span>ronald<span class="w"> </span>--replicas<span class="w"> </span><span class="m">3</span>
+oc<span class="w"> </span>autoscale<span class="w"> </span>deployment<span class="w"> </span>ronald<span class="w"> </span>--min<span class="o">=</span><span class="m">1</span><span class="w"> </span>--max<span class="o">=</span><span class="m">5</span>
+</pre></div>
+</div>
+<p><strong>Taints &amp; tolerations</strong></p>
+<p>Source: <a class="reference external" href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/nodes/controlling-pod-placement-onto-nodes-scheduling#nodes-scheduler-taints-tolerations-about_nodes-scheduler-taints-tolerations">https://access.redhat.com/documentation/en-us/openshift_container_platform/4.6/html/nodes/controlling-pod-placement-onto-nodes-scheduling#nodes-scheduler-taints-tolerations-about_nodes-scheduler-taints-tolerations</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>adm<span class="w"> </span>taint<span class="w"> </span>nodes<span class="w"> </span>crc-scmfr-master-0<span class="w"> </span><span class="nv">dedicated</span><span class="o">=</span>special-user:NoSchedule
+</pre></div>
+</div>
+<p>Will result in the following on the node:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NoSchedule</span>
+<span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dedicated</span>
+<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">special-user</span>
+</pre></div>
+</div>
+<p>Now create a toleration on a deployment</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tolerations</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NoSchedule</span>
+<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dedicated</span>
+<span class="w">    </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Equal</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">special-user</span>
+</pre></div>
+</div>
+<p><strong>NodeSelector</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>oc<span class="w"> </span>label<span class="w"> </span>node<span class="w"> </span>crc-scmfr-master-0<span class="w"> </span><span class="nv">zone1</span><span class="o">=</span>east
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nodeSelector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">zone1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">east</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cluster_node_tuning.html" class="btn btn-neutral float-left" title="OCP 4 tune nodes inside cluster" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="list_unused_pvc.html" class="btn btn-neutral float-right" title="List unused PVC’s inside project using Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ronald van Butselaar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
