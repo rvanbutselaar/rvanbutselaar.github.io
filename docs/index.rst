@@ -14,6 +14,7 @@ Welcome to Ronald's documentation!
    macos/index
    golang/index
    aws/index
+   azure/index
    windows/index
    terraform/index
 
