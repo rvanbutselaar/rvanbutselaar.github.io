@@ -1,12 +1,12 @@
 # rvanbutselaar.github.io
 
-[![generate_read_the_docs](https://github.com/rvanbutselaar/rvanbutselaar.github.io/actions/workflows/generate_read_the_docs.yml/badge.svg)](https://github.com/rvanbutselaar/rvanbutselaar.github.io/actions/workflows/generate_read_the_docs.yml)
+[![Deploy Sphinx site to GitHub Pages](https://github.com/rvanbutselaar/rvanbutselaar.github.io/actions/workflows/sphinx-gh-pages.yml/badge.svg)](https://github.com/rvanbutselaar/rvanbutselaar.github.io/actions/workflows/sphinx-gh-pages.yml)
 
 Init & local testing:
 
 ```bash
-pip install sphinx sphinx-rtd-theme
-make clean && make html
+python -m pip install -r docs/requirements.txt
+make -C docs clean html
 ```
 
-You can now open [_build/html/index.html] to view the local build.
+You can now open [docs/_build/html/index.html] to view the local build.
