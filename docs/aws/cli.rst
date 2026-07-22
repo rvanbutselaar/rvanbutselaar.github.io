@@ -1,7 +1,7 @@
 AWS CLI
 ========================================================================
 
-Delete files inside S3 buckets
+Delete files inside S3 buckets:
 
 .. code-block:: bash
 
